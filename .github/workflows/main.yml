@@ -9,6 +9,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: List files in the repository
+      run: |
+          ls ${{ github.workspace }}
     - name: Build and Test
       run: |
         dotnet build
