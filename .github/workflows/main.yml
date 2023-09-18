@@ -14,6 +14,7 @@ jobs:
           ls ${{ github.workspace }}
     - name: Build and Test
       run: |
+        cd CalculatorApp
         dotnet build
         dotnet test
 
