@@ -3,21 +3,21 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: List files in the repository
       run: |
-          if [ "$RUNNER_OS" == "Windows" ]; then
+        if ($env:RUNNER_OS -eq "Windows") {
             dir ${{ github.workspace }}
-          else
+        } else {
             ls ${{ github.workspace }}
-          fi
+        }
 
     - name: Build and Test
       run: |
