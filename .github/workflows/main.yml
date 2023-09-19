@@ -18,6 +18,8 @@ jobs:
         } else {
             ls ${{ github.workspace }}
         }
+      shell: pwsh
+
 
     - name: Build and Test
       run: |
