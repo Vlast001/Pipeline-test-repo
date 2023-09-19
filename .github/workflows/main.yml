@@ -3,15 +3,22 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: List files in the repository
       run: |
-          ls ${{ github.workspace }}
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            dir ${{ github.workspace }}
+          else
+            ls ${{ github.workspace }}
+          fi
+
     - name: Build and Test
       run: |
         cd CalculatorApp
@@ -19,7 +26,7 @@ jobs:
         dotnet test
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on:  ${{ matrix.os }}
     needs: build
     steps:
     - name: Deploy
